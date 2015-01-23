@@ -562,7 +562,6 @@ void initializeAD() {
 	FVRCONbits.ADFVR = 0x2; // ADC Fixed Voltage Reference 2.048V
 #endif
 
-
 #if defined _16F1823 || defined _16F1824 || defined _16F1825 || defined _16F1936 || defined _16F1937
 	ADCON1bits.ADCS = 0b010; // 32 MHz fatest, Fosc/32, 1 us
 #elif defined _16F1503 || defined _16F1508
@@ -590,7 +589,7 @@ void initializeAD() {
 
 void initializeIO() {
 	CM1CON0 = 0b00000111;		// Comparators off. CxIN pins are configured as digital I/O
-#if defined _16F1508 || defined _16F1936 || defined _16F1937
+#if defined _16F1503 || defined _16F1823 || defined _16F1824 || defined _16F1825 || defined _16F1508 || defined _16F1936 || defined _16F1937
 	CM2CON0 = 0b00000111;		// Comparators off. CxIN pins are configured as digital I/O
 #endif
 
@@ -598,12 +597,22 @@ void initializeIO() {
 #if defined _16F1508 || defined _16F1503 || defined _16F1823 || defined _16F1824 || defined _16F1825
 	ANSELA = 0b00000000;
 	ANSELC = 0b00000000;
+	TRISA = 0b00000000;
+	TRISC = 0b00000000;
+	PORTA = 0b00000000;
+	PORTC = 0b00000000;
 #if defined _16F1508
 	ANSELB = 0b00000000;
+	TRISB = 0b00000000;
+	PORTB = 0b00000000;
 #endif
 #elif defined _16F1936 ||  defined _16F1937
 	ANSELA = 0b00000000;
 	ANSELB = 0b00000000;
+	TRISA = 0b00000000;
+	TRISB = 0b00000000;
+	PORTA = 0b00000000;
+	PORTB = 0b00000000;
 #elif defined _18F14K50
 	ANSEL = 0b00000000;
 	ANSELH = 0b00000000;
@@ -2036,6 +2045,7 @@ void interrupt isr(void) {
 		}
 #elif defined _16F1503 || defined _16F1823 || defined _16F1824 || defined _16F1825
 		if(IOCAFbits.IOCAF2) {
+		}
 #endif
 #endif
 #ifdef BONA_IO_PIN12_IN
